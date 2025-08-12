@@ -10,6 +10,14 @@ This project enables you to:
 - **Analyze** spending patterns, trends, and financial health
 - **Chat** with an AI assistant about your financial data
 
+## Demo Video
+
+🎥 **Watch the full walkthrough:**
+
+![Demo Video](Per2.mp4)
+
+*Demo video showing the scraper in action and dashboard features*
+
 ## Project Structure
 
 ```
