@@ -1,0 +1,700 @@
+@import "tailwindcss";
+
+:root {
+  /* Typography System */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+  
+  /* Fluid Typography */
+  --text-heading-main: clamp(1.75rem, 4vw, 2.5rem);
+  --text-heading-sub: clamp(1.1rem, 2.5vw, 1.4rem);
+  --text-body: clamp(1rem, 1.5vw, 1.1rem);
+  --text-small: 0.875rem;
+  
+  /* Colors - Dark Theme (Primary) */
+  --bg-primary: #1a1d23;
+  --bg-secondary: #252832;
+  --bg-tertiary: #2a2e37;
+  --bg-elevated: rgba(37, 40, 50, 0.9);
+  --bg-glass: rgba(37, 40, 50, 0.8);
+  
+  --surface-primary: #252832;
+  --surface-secondary: #2a2e37;
+  --surface-tertiary: #323641;
+  
+  --text-primary: #e8eaed;
+  --text-secondary: #a8aab0;
+  --text-tertiary: #8a8d93;
+  --text-accent: #e8eaed;
+  
+  --border-primary: rgba(168, 170, 176, 0.2);
+  --border-secondary: rgba(168, 170, 176, 0.1);
+  --border-glass: rgba(232, 234, 237, 0.08);
+  
+  /* Domain Expertise Accent Colors */
+  --accent-steel-blue: #6B8CAE;    /* Civil Engineering */
+  --accent-soft-purple: #8E7B9B;   /* Forensics */
+  --accent-sage-green: #7BA05B;    /* Geospatial Analysis */
+  --accent-warm-bronze: #A68B5B;   /* Machine Learning */
+  --accent-cool-slate: #7A8B9A;    /* Deep Learning */
+  --accent-olive-green: #8B9B7A;   /* Computer Vision */
+  --accent-warm-clay: #A68A7B;     /* Damage Assessment */
+  --accent-muted-red: #B85450;     /* Financial Risk */
+  
+  /* Semantic Color Mapping */
+  --accent-primary: var(--accent-steel-blue);
+  --accent-secondary: var(--accent-soft-purple);
+  --accent-success: var(--accent-sage-green);
+  --accent-warning: var(--accent-warm-bronze);
+  --accent-info: var(--accent-cool-slate);
+  --accent-vision: var(--accent-olive-green);
+  --accent-assessment: var(--accent-warm-clay);
+  --accent-risk: var(--accent-muted-red);
+  
+  /* Glass Effects */
+  --glass-bg: rgba(37, 40, 50, 0.75);
+  --glass-border: rgba(232, 234, 237, 0.06);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  
+  /* Spacing & Layout */
+  --content-max-width: 1400px;
+  --sidebar-width: 280px;
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+}
+
+[data-theme="light"] {
+  /* Light Theme Overrides */
+  --bg-primary: #fafbfc;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #f1f3f4;
+  --bg-elevated: rgba(246, 248, 250, 0.95);
+  --bg-glass: rgba(250, 251, 252, 0.85);
+  
+  --surface-primary: #f6f8fa;
+  --surface-secondary: #f1f3f4;
+  --surface-tertiary: #e1e4e8;
+  
+  --text-primary: #24292f;
+  --text-secondary: #656d76;
+  --text-tertiary: #8b949e;
+  --text-accent: #24292f;
+  
+  --border-primary: rgba(101, 109, 118, 0.3);
+  --border-secondary: rgba(101, 109, 118, 0.15);
+  --border-glass: rgba(36, 41, 47, 0.08);
+  
+  --glass-bg: rgba(250, 251, 252, 0.85);
+  --glass-border: rgba(36, 41, 47, 0.06);
+  --glass-shadow: 0 8px 32px rgba(36, 41, 47, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  font-weight: 400;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Additional Scrolling Control Styles */
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Only the main content scrolls */
+main {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-tertiary) transparent;
+}
+
+main::-webkit-scrollbar {
+  width: 6px;
+}
+
+main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: var(--surface-tertiary);
+  border-radius: 20px;
+}
+
+/* Transaction list scrolling */
+.transaction-list-container {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-tertiary) transparent;
+}
+
+.transaction-list-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.transaction-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transaction-list-container::-webkit-scrollbar-thumb {
+  background-color: var(--surface-tertiary);
+  border-radius: 20px;
+}
+
+/* Fix cards to ensure they're always visible */
+.h-full.flex.flex-col.overflow-hidden {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--text-accent);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-heading-main);
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+h2 {
+  font-size: var(--text-heading-sub);
+}
+
+.text-display {
+  font-family: var(--font-display);
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.text-fluid-lg {
+  font-size: var(--text-heading-main);
+}
+
+.text-fluid-md {
+  font-size: var(--text-heading-sub);
+}
+
+.text-fluid-sm {
+  font-size: var(--text-small);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Custom Scrollbar Styles */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(168, 170, 176, 0.2);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(168, 170, 176, 0.3);
+}
+
+/* Hide scrollbar when not hovering */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.overflow-y-auto:hover {
+  scrollbar-color: rgba(168, 170, 176, 0.2) transparent;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 170, 176, 0.2) transparent;
+}
+
+/* For Webkit browsers */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(168, 170, 176, 0.2);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(168, 170, 176, 0.3);
+}
+
+/* Glass Morphism Base */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Sophisticated Animations */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Focus States */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* Grid Pattern Background (Subtle) */
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(232, 234, 237, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 234, 237, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+[data-theme="light"] .bg-grid {
+  background-image: 
+    linear-gradient(rgba(36, 41, 47, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 41, 47, 0.02) 1px, transparent 1px);
+}
+
+/* Chart Animation Styles */
+.chart-value-display {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chart-percentage-display {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Portfolio Performance Specific */
+.portfolio-performance .chart-header {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.portfolio-performance .chart-value {
+  font-variant-numeric: tabular-nums;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.portfolio-performance .chart-percentage {
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.portfolio-performance .chart-percentage:hover {
+  transform: translateY(-1px);
+}
+
+/* Smooth hover transitions for chart containers */
+.chart-hover-zone {
+  transition: all 0.2s ease;
+}
+
+.chart-hover-zone:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow), 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Time Period Selector Animation */
+.period-selector {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.period-selector button {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.period-selector button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.period-selector button:hover::before {
+  left: 100%;
+}
+
+.period-selector button.active {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(107, 140, 174, 0.3);
+}
+
+.period-selector button:not(.active):hover {
+  transform: translateY(-1px);
+  background: rgba(168, 170, 176, 0.08);
+}
+
+.period-selector button:active {
+  transform: scale(0.98);
+}
+
+/* Transaction list item styling */
+.account-image {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.account-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Filter button and dropdown styling - Enhanced for better appearance and theme consistency */
+.filter-button {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.filter-button.active {
+  background-color: rgba(107, 140, 174, 0.2);
+  color: var(--accent-steel-blue);
+  border-color: rgba(107, 140, 174, 0.3);
+  font-weight: 500;
+}
+
+.filter-button-badge {
+  background-color: var(--accent-steel-blue);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.375rem;
+  font-weight: 600;
+}
+
+.filter-dropdown {
+  position: absolute;
+  z-index: 50;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.filter-dropdown-header {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+  font-weight: 500;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--surface-secondary);
+  position: sticky;
+  top: 0;
+}
+
+/* Enhanced filter menu styling */
+.filter-menu {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-tertiary) transparent;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.filter-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.filter-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-menu::-webkit-scrollbar-thumb {
+  background-color: var(--surface-tertiary);
+  border-radius: 20px;
+}
+
+.filter-category {
+  border-bottom: 1px solid var(--border-secondary);
+  overflow: visible;
+}
+
+.filter-category:last-child {
+  border-bottom: none;
+}
+
+.filter-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--surface-secondary);
+  z-index: 20;
+  border-bottom: 1px solid var(--border-secondary);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filter-option {
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 6px 8px;
+  text-align: left;
+  border-radius: 4px;
+  font-weight: 400;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter-option:hover {
+  background-color: var(--surface-tertiary);
+}
+
+.filter-option.active {
+  background-color: rgba(107, 140, 174, 0.25);
+  color: var(--accent-steel-blue);
+  font-weight: 500;
+}
+
+/* Filter options container - allows each category to scroll independently */
+.filter-options-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-tertiary) transparent;
+  border-radius: 4px;
+  overflow-y: auto;
+}
+
+.filter-options-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.filter-options-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filter-options-container::-webkit-scrollbar-thumb {
+  background-color: var(--surface-tertiary);
+  border-radius: 10px;
+}
+
+/* Improve filter checkbox visibility */
+.filter-checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--border-secondary);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.filter-checkbox.active {
+  border-color: var(--accent-steel-blue);
+  background-color: var(--accent-steel-blue);
+  box-shadow: 0 0 0 1px rgba(107, 140, 174, 0.3);
+}
+
+/* Improved filter chip styling */
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 10px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: rgba(107, 140, 174, 0.2);
+  color: var(--accent-steel-blue);
+  border: 1px solid rgba(107, 140, 174, 0.4);
+  transition: all 0.2s ease;
+  max-width: 180px;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filter-chip:hover {
+  background-color: rgba(107, 140, 174, 0.3);
+}
+
+.filter-chip-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.filter-chip-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-steel-blue);
+  margin-left: 6px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.filter-chip-close:hover {
+  background-color: rgba(107, 140, 174, 0.3);
+  transform: scale(1.1);
+}
+
+.filter-badge {
+  background-color: var(--accent-steel-blue);
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+/* Light mode overrides for better contrast */
+[data-theme="light"] .filter-chip {
+  background-color: rgba(107, 140, 174, 0.15);
+  border-color: rgba(107, 140, 174, 0.4);
+  color: var(--accent-steel-blue);
+}
+
+[data-theme="light"] .filter-checkbox {
+  border-color: rgba(107, 140, 174, 0.4);
+}
+
+[data-theme="light"] .filter-checkbox.active {
+  background-color: var(--accent-steel-blue);
+  border-color: var(--accent-steel-blue);
+}
+
+[data-theme="light"] .filter-option:hover {
+  background-color: rgba(107, 140, 174, 0.1);
+}
+
+[data-theme="light"] .filter-option.active {
+  background-color: rgba(107, 140, 174, 0.2);
+  color: var(--accent-steel-blue);
+  font-weight: 500;
+}

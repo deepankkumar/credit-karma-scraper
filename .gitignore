@@ -1,0 +1,5 @@
+Data/
+test_*
+node_modules/
+finance-dashboard/node_modules/
+.env
